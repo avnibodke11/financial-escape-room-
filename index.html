@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Escape Room | The Money Mystery Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ====================================================================
+       PERSISTENT TOP STATUS BAR (Visible during active gameplay: Rooms 1-5)
+       ==================================================================== -->
+  <header id="top-navbar" class="top-navbar hidden">
+    <div class="nav-brand">
+      <span class="safe-icon">🔐</span>
+      <span class="brand-text">FINANCIAL ESCAPE ROOM</span>
+    </div>
+
+    <!-- Live Game Status Metrics -->
+    <div class="nav-status-group">
+      <div class="status-item">
+        <span class="status-label">Player:</span>
+        <span id="nav-player-name" class="status-val highlight">Player</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Level:</span>
+        <span id="nav-difficulty" class="status-badge">Medium</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Progress:</span>
+        <span id="nav-room-indicator" class="status-val">Room 1 of 5</span>
+      </div>
+      <div class="status-item timer-box">
+        <span class="status-icon">⏱️</span>
+        <span id="nav-timer" class="status-timer">00:00</span>
+      </div>
+      <div class="status-item score-box">
+        <span class="status-icon">🏆</span>
+        <span id="nav-score" class="status-score">0 pts</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       PERSISTENT CLUE NOTEBOOK (Visible during Rooms 1-5)
+       ==================================================================== -->
+  <aside id="case-file-panel" class="case-file-panel hidden">
+    <div class="case-file-header">
+      <div class="case-file-title">
+        <span class="folder-icon">📁</span>
+        <strong>YOUR CLUE NOTEBOOK:</strong>
+        <span class="case-file-subtitle">Secret Numbers for the Safe</span>
+      </div>
+      <div class="case-file-hint">Solve each room to get 1 number. Put all 4 together in Room 5 to open the safe!</div>
+    </div>
+
+    <div class="fragments-container">
+      <!-- Slot for Room 1 Secret Number -->
+      <div id="frag-box-1" class="frag-box locked">
+        <div class="frag-label">Room 1 (Budget)</div>
+        <div class="frag-display" id="frag-val-1">?</div>
+        <div class="frag-status" id="frag-status-1">LOCKED</div>
+      </div>
+
+      <!-- Slot for Room 2 Secret Number -->
+      <div id="frag-box-2" class="frag-box locked">
+        <div class="frag-label">Room 2 (Scam)</div>
+        <div class="frag-display" id="frag-val-2">?</div>
+        <div class="frag-status" id="frag-status-2">LOCKED</div>
+      </div>
+
+      <!-- Slot for Room 3 Secret Number -->
+      <div id="frag-box-3" class="frag-box locked">
+        <div class="frag-label">Room 3 (Clue)</div>
+        <div class="frag-display" id="frag-val-3">?</div>
+        <div class="frag-status" id="frag-status-3">LOCKED</div>
+      </div>
+
+      <!-- Slot for Room 4 Secret Number -->
+      <div id="frag-box-4" class="frag-box locked">
+        <div class="frag-label">Room 4 (Savings)</div>
+        <div class="frag-display" id="frag-val-4">?</div>
+        <div class="frag-status" id="frag-status-4">LOCKED</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ====================================================================
+       MAIN CONTENT CONTAINER — SINGLE PAGE SCREENS (Toggled by .active)
+       ==================================================================== -->
+  <main id="app" class="app-container">
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 1: Start Screen
+         ------------------------------------------------------------------ -->
+    <section id="screen-start" class="screen active">
+      <div class="card hero-card">
+        <div class="security-badge pulse">🔍 ESCAPE ROOM CHALLENGE</div>
+        <h1 class="hero-title">FINANCIAL ESCAPE ROOM</h1>
+        <p class="hero-tagline">
+          A mystery is happening at the bank! Someone locked the main safe shut and scrambled the money records.
+          Can you solve 5 simple money challenges, find the secret 4-digit code, and unlock the safe before time runs out?
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="feature-icon">🧩</span>
+            <h3>5 Quick Challenges</h3>
+            <p>Fixing budgets, spotting fake messages, reading receipts, and smart saving.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🔑</span>
+            <h3>Clue Notebook</h3>
+            <p>Collect 4 secret numbers along the way to open the big safe at the end.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">⚡</span>
+            <h3>Fun Scoring</h3>
+            <p>Earn 100 points per puzzle on your own, plus a fast-finish time bonus!</p>
+          </div>
+        </div>
+
+        <button id="btn-to-intro" class="btn btn-primary btn-large glow-btn">
+          ENTER THE ESCAPE ROOM ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 2: Story Intro Screen
+         ------------------------------------------------------------------ -->
+    <section id="screen-intro" class="screen">
+      <div class="card intro-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="terminal-title">MISSION_LOG // THE_LOCKED_SAFE</span>
+        </div>
+
+        <div class="intro-content">
+          <h2 class="section-title">🚨 THE MYSTERY STORY</h2>
+          <div class="dialogue-box">
+            <p><strong>ALERT:</strong> Late last night, someone tried to mess with the bank's money records! To keep the cash safe, the security system slammed the big safe shut with an emergency lock.</p>
+            <p>We need a sharp detective to walk through 5 rooms, check the numbers, fix the mistakes, and collect <strong>4 secret code numbers</strong>.</p>
+            <p>In Room 5, you'll put all 4 numbers together on a keypad to open the safe and save the day!</p>
+          </div>
+
+          <div class="button-row">
+            <button id="btn-skip-intro" class="btn btn-secondary">Skip Story</button>
+            <button id="btn-to-name" class="btn btn-primary">LET'S GO ➔</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 3: Name Entry Screen
+         ------------------------------------------------------------------ -->
+    <section id="screen-name" class="screen">
+      <div class="card auth-card">
+        <div class="card-icon">🪪</div>
+        <h2 class="section-title">WHAT'S YOUR NAME?</h2>
+        <p class="section-subtitle">Enter your name or your team nickname to start:</p>
+
+        <form id="form-player-name" class="name-form" onsubmit="return false;">
+          <div class="input-group">
+            <label for="player-name-input">Player / Team Name</label>
+            <input 
+              type="text" 
+              id="player-name-input" 
+              placeholder="e.g. Sam or Super Solvers" 
+              maxlength="25" 
+              autocomplete="off" 
+              required 
+            />
+          </div>
+          <div id="name-error-msg" class="feedback-msg error hidden">
+            ⚠️ Please enter a name to continue.
+          </div>
+
+          <button id="btn-submit-name" type="submit" class="btn btn-primary btn-large">
+            CHOOSE DIFFICULTY ➔
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 4: Difficulty Selection Screen
+         ------------------------------------------------------------------ -->
+    <section id="screen-difficulty" class="screen">
+      <div class="difficulty-container">
+        <h2 class="section-title text-center">CHOOSE YOUR CHALLENGE LEVEL</h2>
+        <p class="section-subtitle text-center">Pick the difficulty level that feels right for you:</p>
+
+        <div class="difficulty-grid">
+          <!-- Easy Card -->
+          <div class="card difficulty-card" data-diff="easy" onclick="selectDifficulty('easy')" style="cursor: pointer;">
+            <div class="diff-header">
+              <span class="diff-tier-tag easy-tag">BEGINNER FRIENDLY</span>
+              <span class="diff-icon">🟢</span>
+            </div>
+            <h3 class="diff-title">Easy: Money Basics</h3>
+            <p class="diff-desc">
+              Nice round numbers, very obvious scam warnings, simple choices, and clear hints whenever you want them. Great if you're new!
+            </p>
+            <ul class="diff-perks">
+              <li>✓ Clean round ₹ amounts</li>
+              <li>✓ Clear scam warning signs</li>
+              <li>✓ Friendly, simple questions</li>
+            </ul>
+            <button class="btn btn-diff btn-diff-easy" onclick="selectDifficulty('easy')">
+              Play Easy Mode
+            </button>
+          </div>
+
+          <!-- Moderate Card -->
+          <div class="card difficulty-card popular" data-diff="moderate" onclick="selectDifficulty('moderate')" style="cursor: pointer;">
+            <div class="popular-ribbon">RECOMMENDED</div>
+            <div class="diff-header">
+              <span class="diff-tier-tag moderate-tag">BALANCED & FUN</span>
+              <span class="diff-icon">🟡</span>
+            </div>
+            <h3 class="diff-title">Medium: Smart Money</h3>
+            <p class="diff-desc">
+              Real-life monthly numbers, tricky distractors (like credit card limits), fake text messages, and everyday saving decisions.
+            </p>
+            <ul class="diff-perks">
+              <li>✓ Real-world budget bills</li>
+              <li>✓ Sneaky scam messages</li>
+              <li>✓ 5-year savings choices</li>
+            </ul>
+            <button class="btn btn-diff btn-diff-moderate" onclick="selectDifficulty('moderate')">
+              Play Medium Mode
+            </button>
+          </div>
+
+          <!-- Finance Card -->
+          <div class="card difficulty-card" data-diff="finance" onclick="selectDifficulty('finance')" style="cursor: pointer;">
+            <div class="diff-header">
+              <span class="diff-tier-tag finance-tag">FOR MONEY BUFFS</span>
+              <span class="diff-icon">🔴</span>
+            </div>
+            <h3 class="diff-title">Hard: Money Pro</h3>
+            <p class="diff-desc">
+              A bit more math, simple interest loan calculations, subtle phishing domain alerts, and long-term saving in top companies.
+            </p>
+            <ul class="diff-perks">
+              <li>✓ Simple interest loan calculation</li>
+              <li>✓ Spotting spoofed phishing domains</li>
+              <li>✓ 10-year compound wealth growth</li>
+            </ul>
+            <button class="btn btn-diff btn-diff-finance" onclick="selectDifficulty('finance')">
+              Play Hard Mode
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 5: Active Rooms (Rooms 1, 2, 3, 4)
+         ------------------------------------------------------------------ -->
+    <section id="screen-room" class="screen">
+      <div class="room-container">
+        
+        <!-- Room Header -->
+        <div class="room-top-header">
+          <div class="room-meta">
+            <span id="room-sector-tag" class="sector-tag">Challenge 1</span>
+            <h2 id="room-title" class="room-main-title">Room 1</h2>
+          </div>
+          <div id="room-difficulty-pill" class="diff-pill">Level: Easy</div>
+        </div>
+
+        <!-- 1-Sentence Story Hook -->
+        <div class="story-hook-box">
+          <span class="hook-icon">🕵️</span>
+          <p id="room-story-text" class="hook-text">
+            Loading challenge...
+          </p>
+        </div>
+
+        <!-- Hint Control: Hidden by default (Requires clicking to reveal) -->
+        <div class="hint-control-area">
+          <button id="btn-show-hint" type="button" class="btn btn-hint" onclick="revealRoomHint()">
+            💡 Need a hint? <span class="hint-penalty">(-40 pts if used)</span>
+          </button>
+          <div id="room-guidance-box" class="guidance-box hidden">
+            <span class="guidance-icon">💡</span>
+            <div class="guidance-content">
+              <strong class="guidance-label">HINT (Max 60 pts for this room):</strong>
+              <span id="room-guidance-text"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Puzzle Card Area (Injected by game.js) -->
+        <div id="room-puzzle-content" class="puzzle-area">
+          <!-- Populated dynamically based on Room 1, 2, 3, or 4 -->
+        </div>
+
+        <!-- Feedback Box (Instant correct / retry banner) -->
+        <div id="room-feedback" class="feedback-panel hidden">
+          <div id="feedback-icon" class="feedback-icon">✓</div>
+          <div class="feedback-body">
+            <h4 id="feedback-title" class="feedback-title">Correct!</h4>
+            <p id="feedback-message" class="feedback-message">Great job! You found the secret number.</p>
+            <div id="feedback-fragment-reveal" class="feedback-fragment hidden">
+              Secret Number Found: <strong id="feedback-fragment-val" class="frag-highlight">?</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Control Buttons -->
+        <div class="room-actions">
+          <button id="btn-submit-answer" class="btn btn-primary btn-large">
+            SUBMIT YOUR ANSWER ➔
+          </button>
+          <button id="btn-retry-room" class="btn btn-secondary hidden">
+            🔄 TRY AGAIN
+          </button>
+          <button id="btn-next-room" class="btn btn-success btn-large hidden">
+            GO TO NEXT ROOM ➔
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 6: Room 5 — Master Safe Lock & Keypad
+         ------------------------------------------------------------------ -->
+    <section id="screen-vault" class="screen">
+      <div class="vault-container">
+        
+        <div class="vault-header text-center">
+          <span class="sector-tag">Final Challenge: The Big Safe</span>
+          <h2 class="room-main-title">OPEN THE SECRET SAFE</h2>
+          <p class="vault-story">
+            The safe is locked with a 4-digit code.
+            Look at the 4 numbers you found in Rooms 1, 2, 3, and 4 in your Clue Notebook, and enter them in order!
+          </p>
+        </div>
+
+        <!-- Clue Review Box -->
+        <div class="vault-cipher-review">
+          <h4 class="cipher-heading">YOUR 4 SECRET CODE NUMBERS:</h4>
+          <div class="vault-fragments-row">
+            <div class="vault-frag-tile">
+              <span class="tile-room">Room 1</span>
+              <span class="tile-val" id="vault-frag-1">?</span>
+            </div>
+            <span class="cipher-plus">+</span>
+            <div class="vault-frag-tile">
+              <span class="tile-room">Room 2</span>
+              <span class="tile-val" id="vault-frag-2">?</span>
+            </div>
+            <span class="cipher-plus">+</span>
+            <div class="vault-frag-tile">
+              <span class="tile-room">Room 3</span>
+              <span class="tile-val" id="vault-frag-3">?</span>
+            </div>
+            <span class="cipher-plus">+</span>
+            <div class="vault-frag-tile">
+              <span class="tile-room">Room 4</span>
+              <span class="tile-val" id="vault-frag-4">?</span>
+            </div>
+          </div>
+          <div class="cipher-tip">Type the 4 numbers on the keypad below or on your keyboard.</div>
+        </div>
+
+        <!-- Keypad & Digital Display Interface -->
+        <div class="keypad-card">
+          <!-- Digital Display -->
+          <div class="keypad-display-wrapper">
+            <div class="display-label">ENTER 4-DIGIT CODE:</div>
+            <div id="vault-code-display" class="keypad-screen">
+              <span class="code-slot filled" id="code-digit-0">_</span>
+              <span class="code-slot filled" id="code-digit-1">_</span>
+              <span class="code-slot filled" id="code-digit-2">_</span>
+              <span class="code-slot filled" id="code-digit-3">_</span>
+            </div>
+            <div id="vault-keypad-status" class="keypad-status">Ready: Type 4 numbers...</div>
+          </div>
+
+          <!-- Numpad Grid -->
+          <div class="numpad-grid">
+            <button class="num-btn" onclick="pressKeypad('1')">1</button>
+            <button class="num-btn" onclick="pressKeypad('2')">2</button>
+            <button class="num-btn" onclick="pressKeypad('3')">3</button>
+            
+            <button class="num-btn" onclick="pressKeypad('4')">4</button>
+            <button class="num-btn" onclick="pressKeypad('5')">5</button>
+            <button class="num-btn" onclick="pressKeypad('6')">6</button>
+            
+            <button class="num-btn" onclick="pressKeypad('7')">7</button>
+            <button class="num-btn" onclick="pressKeypad('8')">8</button>
+            <button class="num-btn" onclick="pressKeypad('9')">9</button>
+            
+            <button class="num-btn num-action clear" onclick="clearKeypad()">CLR</button>
+            <button class="num-btn" onclick="pressKeypad('0')">0</button>
+            <button class="num-btn num-action backspace" onclick="backspaceKeypad()">⌫</button>
+          </div>
+
+          <!-- Direct Input Fallback & Action -->
+          <div class="keypad-submit-row">
+            <button id="btn-unlock-vault" class="btn btn-primary btn-large btn-unlock" onclick="submitVaultCode()">
+              🔓 UNLOCK THE SAFE
+            </button>
+          </div>
+
+          <!-- Error / Retry Box -->
+          <div id="vault-error-box" class="feedback-panel error hidden">
+            <div class="feedback-icon">⚠️</div>
+            <div class="feedback-body">
+              <h4 class="feedback-title">CODE INCORRECT</h4>
+              <p id="vault-error-msg" class="feedback-message">
+                Double-check the 4 numbers in your Clue Notebook. Put them in order: Room 1, then Room 2, then Room 3, then Room 4.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 7: Escape Celebration Screen
+         ------------------------------------------------------------------ -->
+    <section id="screen-escape" class="screen">
+      <div class="card escape-card text-center">
+        <div class="door-animation-container">
+          <div class="vault-door open">
+            <div class="door-wheel spinning">⚙️</div>
+            <div class="door-status-text">SAFE OPENED</div>
+          </div>
+        </div>
+
+        <h1 class="escape-title">🎉 YOU OPENED THE SAFE!</h1>
+        <p class="escape-subtitle">
+          Awesome work! You solved all the puzzles, found the secret code, and opened the safe.
+          The money is completely safe and sound!
+        </p>
+
+        <div class="escape-actions">
+          <button id="btn-view-results" class="btn btn-primary btn-large glow-btn">
+            SEE YOUR FINAL SCORE ➔
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         SCREEN 8: Results & Debrief Screen
+         ------------------------------------------------------------------ -->
+    <section id="screen-results" class="screen">
+      <div class="card results-card">
+        <div class="results-header text-center">
+          <div class="trophy-badge">🏆</div>
+          <h2 class="section-title">GAME COMPLETED!</h2>
+          <p class="results-tagline">Here is your official score report for this game:</p>
+        </div>
+
+        <!-- Rank Title Badge -->
+        <div class="rank-banner">
+          <span class="rank-label">YOUR DETECTIVE BADGE:</span>
+          <h3 id="res-rank-title" class="rank-title">Master Money Detective</h3>
+        </div>
+
+        <!-- Score Breakdown Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Player Name</span>
+            <span id="res-player-name" class="stat-val">Player</span>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-label">Difficulty Level</span>
+            <span id="res-difficulty" class="stat-val">Medium</span>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-label">Total Time Taken</span>
+            <span id="res-time" class="stat-val">04:12</span>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-label">Room Puzzle Points</span>
+            <span id="res-room-points" class="stat-val">500 pts</span>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-label">Speed Agility Bonus</span>
+            <span id="res-speed-bonus" class="stat-val">+40 pts</span>
+          </div>
+
+          <div class="stat-card total-card">
+            <span class="stat-label">FINAL TOTAL SCORE</span>
+            <span id="res-total-score" class="stat-val highlight">540 / 550</span>
+          </div>
+        </div>
+
+        <!-- Event Notice -->
+        <div class="event-disclaimer">
+          <span class="info-icon">ℹ️</span>
+          <span>
+            <strong>Single-Game Kiosk Mode:</strong> Scores are shown for this game session only. 
+            Clicking <em>Play Again</em> clears all numbers and resets the screen fresh for the next player!
+          </span>
+        </div>
+
+        <!-- Reset CTA -->
+        <div class="results-actions text-center">
+          <button id="btn-play-again" class="btn btn-primary btn-large reset-btn">
+            🔄 PLAY AGAIN (NEXT PLAYER)
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       DOOR UNLOCK OVERLAY ANIMATION
+       ==================================================================== -->
+  <div id="door-unlock-overlay" class="door-overlay hidden">
+    <div class="door-overlay-content">
+      <div class="unlock-graphic">🔓</div>
+      <h3 class="unlock-title">CHALLENGE SOLVED!</h3>
+      <p class="unlock-subtitle">Door Unlocked — Secret Number Added to Your Notebook!</p>
+    </div>
+  </div>
+
+  <!-- Load Game Scripts (Vanilla ES6) -->
+  <script src="data.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
