@@ -2110,3 +2110,125 @@ const CONCEPT_LIBRARY = {
 if (typeof window !== "undefined") {
   window.CONCEPT_LIBRARY = CONCEPT_LIBRARY;
 }
+
+// -----------------------------------------------------------------------------
+// ROOM_DATA — playable MVP room configuration
+// This block is intentionally kept separate from the larger concept library.
+// game.js uses this object to render the five-room game.
+// -----------------------------------------------------------------------------
+const ROOM_DATA = {
+  1: {
+    difficulties: {
+      easy: {
+        sector: "Challenge 1 • Broken Budget", title: "ROOM 1 — BROKEN BUDGET", subtitle: "Level: Easy",
+        story: "You found a simple monthly budget. Work out how much money is left after the listed bills.",
+        hint: "Add the three bills, then subtract that total from the income.",
+        incomeLabel: "Monthly Income", incomeValue: 30000,
+        expenses: [{name:"Rent",amount:10000},{name:"Food",amount:5000},{name:"Travel",amount:3000}],
+        distractors: [], question: "How much money is left? (₹)", placeholder: "Enter amount", correctAnswer: "12000", codeFragment: "4",
+        wrongExplanation: "₹30,000 − (₹10,000 + ₹5,000 + ₹3,000) = ₹12,000."
+      },
+      moderate: {
+        sector: "Challenge 1 • Broken Budget", title: "ROOM 1 — BROKEN BUDGET", subtitle: "Level: Medium",
+        story: "A monthly cash sheet has several bills and one number that is only a credit limit. Find the real balance left.",
+        hint: "Do not count the credit-card limit as money that was actually paid.",
+        incomeLabel: "Monthly Income", incomeValue: 42000,
+        expenses: [{name:"Rent",amount:14000},{name:"Food",amount:8000},{name:"Travel",amount:3000}],
+        distractors: [{name:"Credit Card Limit",amount:50000,note:"This is available credit, not a bill paid."}],
+        question: "How much money is left after the three real bills? (₹)", placeholder: "Enter amount", correctAnswer: "17000", codeFragment: "6",
+        wrongExplanation: "Only the three actual bills count: ₹42,000 − ₹25,000 = ₹17,000."
+      },
+      finance: {
+        sector: "Challenge 1 • Broken Budget", title: "ROOM 1 — BROKEN BUDGET", subtitle: "Level: Hard",
+        story: "The ledger includes income, expenses, and a loan amount that must be paid back. Calculate the cash remaining after this month's listed costs.",
+        hint: "Add rent, food, transport, and the loan payment before subtracting from income.",
+        incomeLabel: "Monthly Income", incomeValue: 60000,
+        expenses: [{name:"Rent",amount:18000},{name:"Food",amount:10000},{name:"Transport",amount:4000},{name:"Loan Payment",amount:8000}],
+        distractors: [], question: "How much money remains? (₹)", placeholder: "Enter amount", correctAnswer: "20000", codeFragment: "8",
+        wrongExplanation: "₹60,000 − (₹18,000 + ₹10,000 + ₹4,000 + ₹8,000) = ₹20,000."
+      }
+    }
+  },
+  2: {
+    difficulties: {
+      easy: {
+        sector: "Challenge 2 • Scam Check", title: "ROOM 2 — SCAM OR REAL?", subtitle: "Level: Easy",
+        story: "A message says you won a prize and asks you to click a strange link urgently. Decide if it is a scam.",
+        hint: "Unexpected prizes, strange links, and urgent pressure are warning signs.", sender: "Unknown Number", timestamp: "10:14 AM",
+        messageContent: "CONGRATULATIONS! You won ₹50,000. Click this unknown link in 5 minutes to claim your prize!",
+        question: "Is this message a scam or a real message?", options: [{id:"scam",text:"SCAM"},{id:"legit",text:"REAL"}], correctAnswer:"scam", codeFragment:"2",
+        wrongExplanation:"An unexpected prize plus an unknown link and time pressure are classic scam warning signs."
+      },
+      moderate: {
+        sector: "Challenge 2 • Scam Check", title: "ROOM 2 — SCAM OR REAL?", subtitle: "Level: Medium",
+        story: "A message claims your bank account will be blocked unless you act immediately. Decide whether it is suspicious.",
+        hint: "Banks do not normally ask you to share passwords, OTPs, or click random links through urgent messages.", sender: "BANK-ALERT", timestamp: "8:42 PM",
+        messageContent: "URGENT: Your account will be suspended tonight. Verify immediately at bank-secure-login.example and share the OTP shown on screen.",
+        question: "Is this message a scam or a real message?", options: [{id:"scam",text:"SCAM"},{id:"legit",text:"REAL"}], correctAnswer:"scam", codeFragment:"5",
+        wrongExplanation:"Urgency, a suspicious link, and an OTP request are strong fraud warning signs."
+      },
+      finance: {
+        sector: "Challenge 2 • Scam Check", title: "ROOM 2 — SCAM OR REAL?", subtitle: "Level: Hard",
+        story: "A corporate payment alert looks professional but the sender domain is slightly different from the real company domain.",
+        hint: "Check the exact sender and domain, not just the logo or wording.", sender: "accounts@paypaI-security.example", timestamp: "11:03 AM",
+        messageContent: "Security notice: Confirm your payment credentials within 15 minutes using the attached verification page.",
+        question: "Is this message a scam or a real message?", options: [{id:"scam",text:"SCAM"},{id:"legit",text:"REAL"}], correctAnswer:"scam", codeFragment:"7",
+        wrongExplanation:"A look-alike sender/domain and pressure to enter credentials indicate phishing."
+      }
+    }
+  },
+  3: {
+    difficulties: {
+      easy: {
+        sector: "Challenge 3 • Clue Hunt", title: "ROOM 3 — FIND THE CLUE", subtitle: "Level: Easy",
+        story: "Read the receipt and find the amount marked as the suspicious purchase.", hint: "Look for the item marked FLAGGED.", voucherType:"RECEIPT", merchant:"CITY MART", date:"OCT 14",
+        items:[{label:"Milk",val:"₹120"},{label:"Bread",val:"₹60"},{label:"FLAGGED — Gift Card",val:"₹900"}], total:"₹1,080", footerCode:"AUDIT COPY",
+        question:"What is the amount of the flagged purchase? (₹)", placeholder:"Enter amount", correctAnswer:"900", codeFragment:"3",
+        wrongExplanation:"The flagged Gift Card line shows ₹900."
+      },
+      moderate: {
+        sector: "Challenge 3 • Clue Hunt", title: "ROOM 3 — FIND THE CLUE", subtitle: "Level: Medium",
+        story: "One transaction on the payment slip is marked for review. Find its amount.", hint: "Find the line labelled SUSPENSE.", voucherType:"PAYMENT SLIP", merchant:"NORTHSTAR SERVICES", date:"NOV 02",
+        items:[{label:"Office Supplies",val:"₹1,250"},{label:"Travel",val:"₹2,400"},{label:"SUSPENSE — Unverified Transfer",val:"₹3,750"}], total:"₹7,400", footerCode:"CASE 27",
+        question:"What amount is under SUSPENSE? (₹)", placeholder:"Enter amount", correctAnswer:"3750", codeFragment:"1",
+        wrongExplanation:"The SUSPENSE — Unverified Transfer line shows ₹3,750."
+      },
+      finance: {
+        sector: "Challenge 3 • Clue Hunt", title: "ROOM 3 — FIND THE CLUE", subtitle: "Level: Hard",
+        story: "Inspect the audit voucher and identify the discrepancy amount marked for investigation.", hint: "Look at the DISCREPANCY line.", voucherType:"AUDIT VOUCHER", merchant:"ORBITAL FINANCE", date:"DEC 09",
+        items:[{label:"Reported Total",val:"₹18,500"},{label:"Recorded Total",val:"₹17,200"},{label:"DISCREPANCY",val:"₹1,300"}], total:"REVIEW REQUIRED", footerCode:"AUDIT 91",
+        question:"What is the discrepancy amount? (₹)", placeholder:"Enter amount", correctAnswer:"1300", codeFragment:"9",
+        wrongExplanation:"The voucher explicitly marks the discrepancy as ₹1,300."
+      }
+    }
+  },
+  4: {
+    difficulties: {
+      easy: {
+        sector: "Challenge 4 • Investment Detective", title: "ROOM 4 — SMART MONEY", subtitle: "Level: Easy",
+        story: "You have money needed next month. Choose the safer option.", hint: "Money needed soon should not be placed in a highly risky option.", scenario:"You need ₹10,000 for an important bill next month.",
+        options:[{id:"A",name:"Safe Savings",risk:"LOW RISK",return:"LOWER RETURN",description:"Keep the money in a safe savings account."},{id:"B",name:"Speculative Coin",risk:"HIGH RISK",return:"HIGHER POSSIBLE RETURN",description:"Put all the money into a very volatile coin."}], correctAnswer:"A", codeFragment:"1",
+        wrongExplanation:"Money needed soon should be kept in a safer, more stable place."
+      },
+      moderate: {
+        sector: "Challenge 4 • Investment Detective", title: "ROOM 4 — SMART MONEY", subtitle: "Level: Medium",
+        story: "A student has long-term savings and wants a sensible balance between growth and safety.", hint: "Avoid putting all your savings into one risky option.", scenario:"You have ₹50,000 for a goal five years away.",
+        options:[{id:"A",name:"Diversified Mix",risk:"MODERATE RISK",return:"BALANCED",description:"Spread the money across suitable diversified investments and safer savings."},{id:"B",name:"One Hot Stock",risk:"HIGH RISK",return:"UNCERTAIN",description:"Put 100% into one stock because a friend says it will rise."}], correctAnswer:"A", codeFragment:"2",
+        wrongExplanation:"Diversifying reduces the impact of one investment performing badly."
+      },
+      finance: {
+        sector: "Challenge 4 • Investment Detective", title: "ROOM 4 — SMART MONEY", subtitle: "Level: Hard",
+        story: "An investor has a long time horizon and wants growth without taking an all-or-nothing bet.", hint: "A long horizon can allow some growth assets, but diversification still matters.", scenario:"You are investing for ten years and want growth with controlled risk.",
+        options:[{id:"A",name:"Diversified Growth Plan",risk:"MODERATE RISK",return:"GROWTH POTENTIAL",description:"Use a diversified mix suited to the time horizon instead of relying on one asset."},{id:"B",name:"All-in Speculation",risk:"VERY HIGH RISK",return:"VERY UNCERTAIN",description:"Put the entire amount into one speculative asset."}], correctAnswer:"A", codeFragment:"4",
+        wrongExplanation:"A diversified approach avoids making the entire outcome depend on one speculative asset."
+      }
+    }
+  },
+  5: {
+    masterCodes: { easy:"4231", moderate:"6512", finance:"8794" }
+  }
+};
+
+if (typeof window !== "undefined") {
+  window.ROOM_DATA = ROOM_DATA;
+}
