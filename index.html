@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Financial Escape Room | The Money Mystery Game</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Financial Escape Room V3 | The Money Mystery Game</title>
+  <link rel="stylesheet" href="style-v3.css">
 </head>
 <body>
 
@@ -14,7 +14,7 @@
   <header id="top-navbar" class="top-navbar hidden">
     <div class="nav-brand">
       <span class="safe-icon">🔐</span>
-      <span class="brand-text">FINANCIAL ESCAPE ROOM</span>
+      <span class="brand-text">FINANCIAL ESCAPE ROOM <small class="version-mark">V3 • EVENT EDITION</small></span>
     </div>
 
     <!-- Live Game Status Metrics -->
@@ -32,7 +32,8 @@
         <span id="nav-room-indicator" class="status-val">Room 1 of 5</span>
       </div>
       <div class="status-item timer-box">
-        <span class="status-icon">⏱️</span>
+        <span class="status-icon">⏳</span>
+        <span class="status-label timer-label">TIME LEFT:</span>
         <span id="nav-timer" class="status-timer">00:00</span>
       </div>
       <div class="status-item score-box">
@@ -58,28 +59,28 @@
     <div class="fragments-container">
       <!-- Slot for Room 1 Secret Number -->
       <div id="frag-box-1" class="frag-box locked">
-        <div class="frag-label">Room 1 (Budget)</div>
+        <div class="frag-label">Room 1</div>
         <div class="frag-display" id="frag-val-1">?</div>
         <div class="frag-status" id="frag-status-1">LOCKED</div>
       </div>
 
       <!-- Slot for Room 2 Secret Number -->
       <div id="frag-box-2" class="frag-box locked">
-        <div class="frag-label">Room 2 (Scam)</div>
+        <div class="frag-label">Room 2</div>
         <div class="frag-display" id="frag-val-2">?</div>
         <div class="frag-status" id="frag-status-2">LOCKED</div>
       </div>
 
       <!-- Slot for Room 3 Secret Number -->
       <div id="frag-box-3" class="frag-box locked">
-        <div class="frag-label">Room 3 (Clue)</div>
+        <div class="frag-label">Room 3</div>
         <div class="frag-display" id="frag-val-3">?</div>
         <div class="frag-status" id="frag-status-3">LOCKED</div>
       </div>
 
       <!-- Slot for Room 4 Secret Number -->
       <div id="frag-box-4" class="frag-box locked">
-        <div class="frag-label">Room 4 (Savings)</div>
+        <div class="frag-label">Room 4</div>
         <div class="frag-display" id="frag-val-4">?</div>
         <div class="frag-status" id="frag-status-4">LOCKED</div>
       </div>
@@ -100,24 +101,24 @@
         <h1 class="hero-title">FINANCIAL ESCAPE ROOM</h1>
         <p class="hero-tagline">
           A mystery is happening at the bank! Someone locked the main safe shut and scrambled the money records.
-          Can you solve 5 simple money challenges, find the secret 4-digit code, and unlock the safe before time runs out?
+          Can you solve 4 randomized finance challenges, collect the 4 secret digits, and unlock the final safe before time runs out?
         </p>
 
         <div class="features-grid">
           <div class="feature-item">
             <span class="feature-icon">🧩</span>
-            <h3>5 Quick Challenges</h3>
-            <p>Fixing budgets, spotting fake messages, reading receipts, and smart saving.</p>
+            <h3>4 Randomized Rooms</h3>
+            <p>Budgets, banking, credit, investing, inflation, fraud, and more — shuffled every game.</p>
           </div>
           <div class="feature-item">
             <span class="feature-icon">🔑</span>
             <h3>Clue Notebook</h3>
-            <p>Collect 4 secret numbers along the way to open the big safe at the end.</p>
+            <p>Solve 4 randomized challenges and collect one secret digit from each room.</p>
           </div>
           <div class="feature-item">
             <span class="feature-icon">⚡</span>
             <h3>Fun Scoring</h3>
-            <p>Earn 100 points per puzzle on your own, plus a fast-finish time bonus!</p>
+            <p>Earn points for correct answers, with tougher puzzles and a time bonus.</p>
           </div>
         </div>
 
@@ -182,7 +183,7 @@
             ⚠️ Please enter a name to continue.
           </div>
 
-          <button id="btn-submit-name" type="submit" class="btn btn-primary btn-large">
+          <button id="btn-submit-name" type="button" class="btn btn-primary btn-large">
             CHOOSE DIFFICULTY ➔
           </button>
         </form>
@@ -195,23 +196,23 @@
     <section id="screen-difficulty" class="screen">
       <div class="difficulty-container">
         <h2 class="section-title text-center">CHOOSE YOUR CHALLENGE LEVEL</h2>
-        <p class="section-subtitle text-center">Pick the difficulty level that feels right for you:</p>
+        <p class="section-subtitle text-center">Pick a challenge level. Each level has its own question bank, countdown, and shuffled challenge set. You get 3 attempts per room and up to 2 levels of hints:</p>
 
         <div class="difficulty-grid">
           <!-- Easy Card -->
-          <div class="card difficulty-card" data-diff="easy" onclick="selectDifficulty('easy')" style="cursor: pointer;">
+          <div class="card difficulty-card" data-diff="easy">
             <div class="diff-header">
               <span class="diff-tier-tag easy-tag">BEGINNER FRIENDLY</span>
               <span class="diff-icon">🟢</span>
             </div>
             <h3 class="diff-title">Easy: Money Basics</h3>
             <p class="diff-desc">
-              Nice round numbers, very obvious scam warnings, simple choices, and clear hints whenever you want them. Great if you're new!
+              Foundational finance questions with calculations, banking, credit, inflation, and everyday decisions.
             </p>
             <ul class="diff-perks">
-              <li>✓ Clean round ₹ amounts</li>
-              <li>✓ Clear scam warning signs</li>
-              <li>✓ Friendly, simple questions</li>
+              <li>✓ Mixed finance topics</li>
+              <li>✓ Calculations + reasoning</li>
+              <li>✓ 2-minute countdown</li>
             </ul>
             <button class="btn btn-diff btn-diff-easy" onclick="selectDifficulty('easy')">
               Play Easy Mode
@@ -219,7 +220,7 @@
           </div>
 
           <!-- Moderate Card -->
-          <div class="card difficulty-card popular" data-diff="moderate" onclick="selectDifficulty('moderate')" style="cursor: pointer;">
+          <div class="card difficulty-card popular" data-diff="moderate">
             <div class="popular-ribbon">RECOMMENDED</div>
             <div class="diff-header">
               <span class="diff-tier-tag moderate-tag">BALANCED & FUN</span>
@@ -227,12 +228,12 @@
             </div>
             <h3 class="diff-title">Medium: Smart Money</h3>
             <p class="diff-desc">
-              Real-life monthly numbers, tricky distractors (like credit card limits), fake text messages, and everyday saving decisions.
+              Harder calculations, interpretation, trade-offs, and real-world finance scenarios across multiple topics.
             </p>
             <ul class="diff-perks">
-              <li>✓ Real-world budget bills</li>
-              <li>✓ Sneaky scam messages</li>
-              <li>✓ 5-year savings choices</li>
+              <li>✓ Multi-step calculations</li>
+              <li>✓ Finance reasoning</li>
+              <li>✓ 3-minute countdown</li>
             </ul>
             <button class="btn btn-diff btn-diff-moderate" onclick="selectDifficulty('moderate')">
               Play Medium Mode
@@ -240,23 +241,33 @@
           </div>
 
           <!-- Finance Card -->
-          <div class="card difficulty-card" data-diff="finance" onclick="selectDifficulty('finance')" style="cursor: pointer;">
+          <div class="card difficulty-card" data-diff="finance">
             <div class="diff-header">
               <span class="diff-tier-tag finance-tag">FOR MONEY BUFFS</span>
               <span class="diff-icon">🔴</span>
             </div>
             <h3 class="diff-title">Hard: Money Pro</h3>
             <p class="diff-desc">
-              A bit more math, simple interest loan calculations, subtle phishing domain alerts, and long-term saving in top companies.
+              Advanced finance mode: multi-step returns, risk, investments, credit, insurance, fraud, and tricky financial reasoning.
             </p>
             <ul class="diff-perks">
-              <li>✓ Simple interest loan calculation</li>
-              <li>✓ Spotting spoofed phishing domains</li>
-              <li>✓ 10-year compound wealth growth</li>
+              <li>✓ Compound + return calculations</li>
+              <li>✓ Risk + investment analysis</li>
+              <li>✓ 4-minute countdown</li>
             </ul>
             <button class="btn btn-diff btn-diff-finance" onclick="selectDifficulty('finance')">
               Play Hard Mode
             </button>
+          </div>
+        </div>
+
+        <div class="event-rules-card">
+          <div class="event-rules-title">⚡ EVENT RULES</div>
+          <div class="event-rules-grid">
+            <div><strong>3 attempts</strong><span>per challenge</span></div>
+            <div><strong>Hint 1</strong><span>method hint</span></div>
+            <div><strong>Hint 2</strong><span>direct answer</span></div>
+            <div><strong>Fail a room</strong><span>the run ends</span></div>
           </div>
         </div>
       </div>
@@ -288,12 +299,12 @@
         <!-- Hint Control: Hidden by default (Requires clicking to reveal) -->
         <div class="hint-control-area">
           <button id="btn-show-hint" type="button" class="btn btn-hint" onclick="revealRoomHint()">
-            💡 Need a hint? <span class="hint-penalty">(-40 pts if used)</span>
+            💡 Need a hint?
           </button>
           <div id="room-guidance-box" class="guidance-box hidden">
             <span class="guidance-icon">💡</span>
             <div class="guidance-content">
-              <strong class="guidance-label">HINT (Max 60 pts for this room):</strong>
+              <strong class="guidance-label">HINT:</strong>
               <span id="room-guidance-text"></span>
             </div>
           </div>
@@ -301,10 +312,10 @@
 
         <!-- Dynamic Puzzle Card Area (Injected by game.js) -->
         <div id="room-puzzle-content" class="puzzle-area">
-          <!-- Populated dynamically based on Room 1, 2, 3, or 4 -->
+          <!-- Populated dynamically with a randomized finance challenge -->
         </div>
 
-        <!-- Feedback Box (Instant correct / retry banner) -->
+        <!-- Feedback Box (No answer reveal during gameplay) -->
         <div id="room-feedback" class="feedback-panel hidden">
           <div id="feedback-icon" class="feedback-icon">✓</div>
           <div class="feedback-body">
@@ -320,9 +331,6 @@
         <div class="room-actions">
           <button id="btn-submit-answer" class="btn btn-primary btn-large">
             SUBMIT YOUR ANSWER ➔
-          </button>
-          <button id="btn-retry-room" class="btn btn-secondary hidden">
-            🔄 TRY AGAIN
           </button>
           <button id="btn-next-room" class="btn btn-success btn-large hidden">
             GO TO NEXT ROOM ➔
@@ -343,7 +351,7 @@
           <h2 class="room-main-title">OPEN THE SECRET SAFE</h2>
           <p class="vault-story">
             The safe is locked with a 4-digit code.
-            Look at the 4 numbers you found in Rooms 1, 2, 3, and 4 in your Clue Notebook, and enter them in order!
+            Look at the 4 digits you earned in Rooms 1–4 and enter them in order!
           </p>
         </div>
 
@@ -371,7 +379,7 @@
               <span class="tile-val" id="vault-frag-4">?</span>
             </div>
           </div>
-          <div class="cipher-tip">Type the 4 numbers on the keypad below or on your keyboard.</div>
+          <div class="cipher-tip">Enter the 4 digits on the keypad below or on your keyboard.</div>
         </div>
 
         <!-- Keypad & Digital Display Interface -->
@@ -414,13 +422,13 @@
             </button>
           </div>
 
-          <!-- Error / Retry Box -->
+          <!-- Safe feedback box -->
           <div id="vault-error-box" class="feedback-panel error hidden">
             <div class="feedback-icon">⚠️</div>
             <div class="feedback-body">
               <h4 class="feedback-title">CODE INCORRECT</h4>
               <p id="vault-error-msg" class="feedback-message">
-                Double-check the 4 numbers in your Clue Notebook. Put them in order: Room 1, then Room 2, then Room 3, then Room 4.
+                Double-check the 4 digits in your Clue Notebook. Enter them in order: Room 1, then Room 2, then Room 3, then Room 4.
               </p>
             </div>
           </div>
@@ -505,6 +513,25 @@
           </div>
         </div>
 
+        <div class="stats-grid extra-results-grid">
+          <div class="stat-card">
+            <span class="stat-label">Rooms Cleared</span>
+            <span id="res-rooms-cleared" class="stat-val">0 / 4</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Failed Room</span>
+            <span id="res-failed-room" class="stat-val">—</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Attempts Used</span>
+            <span id="res-attempts" class="stat-val">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Hints Used</span>
+            <span id="res-hints" class="stat-val">0</span>
+          </div>
+        </div>
+
         <!-- Event Notice -->
         <div class="event-disclaimer">
           <span class="info-icon">ℹ️</span>
@@ -537,7 +564,7 @@
   </div>
 
   <!-- Load Game Scripts (Vanilla ES6) -->
-  <script src="data.js"></script>
-  <script src="game.js"></script>
+  <script src="data-v3.js"></script>
+  <script src="game-v3.js"></script>
 </body>
 </html>

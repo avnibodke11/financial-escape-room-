@@ -1,0 +1,12 @@
+Financial Escape Room — V3 Final Event Edition
+
+Final design:
+- Easy: 2-minute run
+- Medium: 3-minute run
+- Hard/Finance: 4-minute run
+- 4 randomized finance challenge rooms + Room 5 final safe
+- 3 attempts per challenge
+- Hint 1 gives a method hint; Hint 2 reveals the direct answer
+- Failed rooms do not reveal answers or code fragments and end the run
+- Final safe has 3 attempts; failure ends the run without revealing the code
+- Scoreboard is session-only (no shared Finplay leaderboard)
